@@ -100,12 +100,12 @@ class Toolbox extends React.Component {
         }*/
         let customFields = this.findObjectByIdInDictArray(inputFields, selectedInput, 'name')
         console.log("customFields is " + customFields)
-        /*for (const [key, value] of Object.entries(customFields)) {
+        for (const [key, value] of Object.entries(customFields)) {
             if (key !== 'name') {
 
             }
-        }*/
-        //let cssClassInput = document.getElementById('cssClassInput').value
+        }
+        let cssClassInput = document.getElementById('cssClassInput').value
         let idInput = document.getElementById('id').value
         idList.push(idInput)
         let x = document.getElementById("idList");
@@ -122,7 +122,7 @@ class Toolbox extends React.Component {
             /*insertData = JSON.parse(insertData)*/
             console.log("insertdata is " + insertData)
             insertData.id = idInput
-            //insertData.properties.css_class = cssClassInput
+            insertData.properties.css_class = cssClassInput
             insertData = JSON.stringify(insertData)
             // let ret = JSON.stringify(this.findEmptyElement(val, insertData))
             console.log("type of insertData" + JSON.parse(insertData).id)
@@ -156,7 +156,7 @@ class Toolbox extends React.Component {
             /*let val = this.view(data, selectedInput, insertTag, inputData)
            */
             val.id = idInput
-            //val.properties.css_class = cssClassInput
+            val.properties.css_class = cssClassInput
             val = JSON.stringify(val)
             arr.push(JSON.parse(val))
             this.NewDiv(arr)
@@ -268,7 +268,7 @@ class Toolbox extends React.Component {
 
                         <div className="ui segment" id="customFields">
                             <label htmlFor="textInput">Enter id</label>
-                            <input type="text" className="ui fluid input" id="id"></input>
+                            <input type="text" className="ui fluid input" id="idInput"></input>
                             <label htmlFor="textInput">Enter CSS class</label>
                             <input type="text" className="ui fluid input" id="cssClassInput"></input>
                         </div>

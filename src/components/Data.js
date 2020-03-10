@@ -1,4 +1,5 @@
 import React from "react";
+
 export let inputType = [{
     "id": "div",
     "name": "div",
@@ -19,9 +20,44 @@ export let inputType = [{
             "data_type": "number",
             "css_class": "",
             "style": ""
-        },
-        "elements": []
+        }
     }]
+
+export let inputFields = [
+    {
+        "name": "div",
+        "id" : "Enter ID",
+        "properties.css_class": "Enter css"
+    },
+    {
+        "name": "input",
+        "id" : "Enter ID",
+        "label": "Enter label",
+        "properties.css_class": "Enter css",
+
+    }
+
+    /*{
+        "name": "div",
+        elements: [
+            {
+                "id" : "Enter ID",
+                "properties.css_class": "Enter css"
+            }
+        ]
+    },
+    {
+        "name": "input",
+        elements: [
+            {
+                "id" : "Enter ID",
+                "label": "Enter label",
+                "properties.css_class": "Enter css"
+            }
+        ]
+    }*/
+
+]
 
 export let js = [
     {
@@ -75,8 +111,49 @@ export let js = [
                     "style": ""
                 },
                 "elements": []
-            }]
-        }]
+            },
+                {
+                    "id": "input31",
+                    "name": "input",
+                    "type": "input",
+                    "label": "Date of Birth",
+                    "align": "center",
+                    "properties": {
+                        "data_type": "date",
+                        "css_class": "",
+                        "style": ""
+                    },
+                    "elements": [{
+                        "id": "input313"
+                    }, {
+                        "id": "input314"
+                    }, {
+                        "id": "input315"
+                    }
+
+                    ]
+                }]
+        },
+            {
+                "id": "div11",
+                "name": "div",
+                "type": "div",
+                "properties": {
+                    "css_class": "div1",
+                    "style": ""
+                },
+                "elements": [{
+                    "id": "div13",
+                    "name": "div",
+                    "type": "div",
+                    "properties": {
+                        "css_class": "div1",
+                        "style": ""
+                    },
+                    "elements": []
+                }]
+            }
+        ]
     }
 ]
 export let js1 = [
@@ -119,7 +196,6 @@ class Data extends React.Component {
     constructor() {
         super();
     }
-
 
 
 }
