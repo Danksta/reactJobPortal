@@ -3,12 +3,16 @@ import {Data, inputFields, inputType, js} from './Data';
 
 export let arr = []
 let pos = []
-let createEle = ''
-let idList = []
+/*let createEle = ''*/
+/*let idList = []*/
 
 class Toolbox extends React.Component {
     constructor() {
         super();
+        this.state = {
+            createEle: '',
+            idList: []
+        }
     }
 
     view(data, selectedInput, insertTag, inputData) {
@@ -107,15 +111,15 @@ class Toolbox extends React.Component {
         }*/
         //let cssClassInput = document.getElementById('cssClassInput').value
         let idInput = document.getElementById('id').value
-        idList.push(idInput)
+        this.state.idList.push(idInput)
         let x = document.getElementById("idList");
         let option = document.createElement("option");
         option.text = idInput;
         x.add(option);
-        if (createEle.length !== 0) {
+        if (this.state.createEle.length !== 0) {
             let enterLocation = document.getElementById('idList').value
-            console.log("crea ele is " + createEle)
-            let val = JSON.parse(createEle)
+            /*console.log("crea ele is " + createEle)*/
+            /*let val = JSON.parse(createEle)*/
 
             /*let insertData = this.view(data, selectedInput, insertTag, inputData)*/
             let insertData = this.findObjectByIdInDictArray(inputData, document.getElementById(selectedInput).value, "name")
@@ -126,7 +130,7 @@ class Toolbox extends React.Component {
             insertData = JSON.stringify(insertData)
             // let ret = JSON.stringify(this.findEmptyElement(val, insertData))
             console.log("type of insertData" + JSON.parse(insertData).id)
-            let arr1 = JSON.parse(createEle)
+            let arr1 = JSON.parse(this.state.createEle)
             /*arr1.push(val)*/
             let arr2 = arr1;
 
@@ -146,10 +150,10 @@ class Toolbox extends React.Component {
             arr.push(JSON.parse(ret))
             this.NewDiv(arr)
             for (let i = 0; i < arr.length; i++) {
-                createEle = JSON.stringify(arr[i])
+                this.state.createEle = JSON.stringify(arr[i])
                 document.getElementById(insertTag).innerText = JSON.stringify(arr[i])
             }
-            console.log("create element is" + createEle)
+            /*console.log("create element is" + createEle)*/
         } else {
             let val = this.findObjectByIdInDictArray(inputData, document.getElementById(selectedInput).value, "name")
 
@@ -160,9 +164,9 @@ class Toolbox extends React.Component {
             val = JSON.stringify(val)
             arr.push(JSON.parse(val))
             this.NewDiv(arr)
-            createEle = JSON.stringify(arr)
+            this.state.createEle = JSON.stringify(arr)
             document.getElementById(insertTag).innerText = JSON.stringify(arr)
-            console.log("create element is" + createEle)
+            /*console.log("create element is" + createEle)*/
 
         }
 
