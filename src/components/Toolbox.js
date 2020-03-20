@@ -1,35 +1,23 @@
 import React from "react"
 import {Data, inputFields, inputType, js} from './Data';
 
-export let arr = []
 let pos = []
-/*let createEle = ''*/
-/*let idList = []*/
 
 class Toolbox extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             createEle: '',
-            idList: []
+            idList: [],
+            arr: props.arr,
+            setData: props.setData
         }
     }
 
     view(data, selectedInput, insertTag, inputData) {
         let p = document.getElementById(insertTag)
-        console.log(data)
         let option = document.getElementById(selectedInput).value
-        /*for (let i = 0; i < inputData.length; i++) {
-            let val = this.findObjectById(inputData[i], option)
-            if (val !== null && val !== false) {
-                break
-            }
-        }*/
-
         let val = this.findObjectByIdInDictArray(inputData, option, "id")
-        console.log("view function val is" + val)
-        /*let html = JSON.stringify(val)*/
-        /*p.innerText += html*/
         return val
     }
 
@@ -64,129 +52,81 @@ class Toolbox extends React.Component {
         return val
     }
 
-    createElement(data, selectedInput, insertTag, inputData, newTag, newTagID) {
-        /*let val = document.getElementById(insertTag).innerText
-        let cssClassInput = document.getElementById('cssClassInput').value
-            let idInput = document.getElementById('idInput').value
-            idList.push(idInput)
-        let x = document.getElementById("idList");
-        let option = document.createElement("option");
-        option.text = idInput;
-        x.add(option);
-        if (val !== "") {
-            val = JSON.parse(val)
+    createElement(data, selectedInput, insertTag, inputData) {
 
-            let insertData = this.view(data, selectedInput, insertTag, inputData)
-            /!*insertData = JSON.parse(insertData)*!/
-            insertData.id = idInput
-            insertData.properties.css_class = cssClassInput
-            insertData = JSON.stringify(insertData)
+        let customFields = this.findObjectByIdInDictArray(inputFields, document.getElementById(selectedInput).value, 'name')
+        console.log("customFields is " + JSON.stringify(customFields))
 
-            let ret = JSON.stringify(this.findEmptyElement(val, insertData))
-            console.log("ret is " + ret)
-            arr.push(JSON.parse(ret))
-            this.NewDiv(arr)
-            console.log("wasim", arr)
-            document.getElementById(insertTag).innerText = ""
-            for (let i = 0; i < arr.length; i++) {
-                document.getElementById(insertTag).innerText = JSON.stringify(arr[i])
-            }
-        } else {
-
-            val = this.view(data, selectedInput, insertTag, inputData)
-            val.id = idInput
-            val.properties.css_class = cssClassInput
-            val = JSON.stringify(val)
-            console.log(JSON.parse(val))
-            arr.push(JSON.parse(val))
-            this.NewDiv(arr)
-            document.getElementById(insertTag).innerText = JSON.stringify(arr[0])
-        }*/
-        let customFields = this.findObjectByIdInDictArray(inputFields, selectedInput, 'name')
-        console.log("customFields is " + customFields)
-        /*for (const [key, value] of Object.entries(customFields)) {
-            if (key !== 'name') {
-
-            }
-        }*/
         //let cssClassInput = document.getElementById('cssClassInput').value
         let idInput = document.getElementById('id').value
         this.state.idList.push(idInput)
         let x = document.getElementById("idList");
         let option = document.createElement("option");
         option.text = idInput;
+        let insertData = this.findObjectByIdInDictArray(inputData, document.getElementById(selectedInput).value, "name")
+        for (const [key, value] of Object.entries(customFields)) {
+            if (key !== 'name') {
+                let keyValue = document.getElementById(key).value
+                if(keyValue !== ''){
+                    let keyArr = key.split('.')
+                    if(keyArr.length > 1){
+                        let insertData1 = insertData
+                        for(let i=0; i<keyArr.length -1 ; i++){
+                            insertData = insertData[keyArr[i]]
+                        }
+                        insertData[keyArr[keyArr.length -1 ]]  = keyValue
+                        insertData = insertData1
+                    }else {
+                        insertData[key] =  keyValue
+                    }
+                }
+            }
+        }
+
         x.add(option);
         if (this.state.createEle.length !== 0) {
             let enterLocation = document.getElementById('idList').value
-            /*console.log("crea ele is " + createEle)*/
-            /*let val = JSON.parse(createEle)*/
-
-            /*let insertData = this.view(data, selectedInput, insertTag, inputData)*/
-            let insertData = this.findObjectByIdInDictArray(inputData, document.getElementById(selectedInput).value, "name")
-            /*insertData = JSON.parse(insertData)*/
-            console.log("insertdata is " + insertData)
+            console.log("insertdata is " + JSON.stringify(insertData))
             insertData.id = idInput
-            //insertData.properties.css_class = cssClassInput
             insertData = JSON.stringify(insertData)
-            // let ret = JSON.stringify(this.findEmptyElement(val, insertData))
-            console.log("type of insertData" + JSON.parse(insertData).id)
             let arr1 = JSON.parse(this.state.createEle)
-            /*arr1.push(val)*/
             let arr2 = arr1;
 
             this.findObjectByIdInDictArray(arr1, enterLocation, "id")
-            console.log("arr1 before posforeach is " + JSON.stringify(arr1) + "pos array is " + pos)
             let str = ''
             pos.forEach(elem => {
                 arr1 = arr1[elem];
                 str = str + "[" + elem + "]"
             })
-            console.log("arr" + str)
-            console.log("insertData is " + insertData)
-            console.log("val is" + JSON.stringify(arr1))
             arr1.elements.push(JSON.parse(insertData))
             let ret = JSON.stringify(arr2)
-            console.log("ret is " + ret)
-            arr.push(JSON.parse(ret))
-            this.NewDiv(arr)
-            for (let i = 0; i < arr.length; i++) {
-                this.state.createEle = JSON.stringify(arr[i])
-                document.getElementById(insertTag).innerText = JSON.stringify(arr[i])
+            this.state.arr = []
+            this.state.arr.push(JSON.parse(ret))
+            this.state.setData(this.state.arr[0])
+            this.NewDiv(this.state.arr)
+            for (let i = 0; i < this.state.arr.length; i++) {
+                this.state.createEle = JSON.stringify(this.state.arr[i])
+                document.getElementById(insertTag).innerText = JSON.stringify(this.state.arr[i])
             }
             /*console.log("create element is" + createEle)*/
         } else {
-            let val = this.findObjectByIdInDictArray(inputData, document.getElementById(selectedInput).value, "name")
 
             /*let val = this.view(data, selectedInput, insertTag, inputData)
            */
-            val.id = idInput
+            insertData.id = idInput
             //val.properties.css_class = cssClassInput
-            val = JSON.stringify(val)
-            arr.push(JSON.parse(val))
-            this.NewDiv(arr)
-            this.state.createEle = JSON.stringify(arr)
-            document.getElementById(insertTag).innerText = JSON.stringify(arr)
+            insertData = JSON.stringify(insertData)
+            this.state.arr = []
+            this.state.arr.push(JSON.parse(insertData))
+            this.state.setData(this.state.arr)
+            this.NewDiv(this.state.arr)
+            this.state.createEle = JSON.stringify(this.state.arr)
+            document.getElementById(insertTag).innerText = JSON.stringify(this.state.arr)
             /*console.log("create element is" + createEle)*/
 
         }
 
 
-    }
-
-
-    findEmptyElement(arr, insertData) {
-        if (arr.elements.length === 0) {
-            console.log('1 is executing')
-            console.log("insertData is" + insertData)
-            console.log("arr is" + JSON.stringify(arr))
-
-            arr.elements.push(JSON.parse(insertData))
-            console.log("insertDataPushed" + JSON.stringify(arr))
-            return arr
-        }
-        console.log('2 is executing')
-        this.findEmptyElement(arr.elements[0], insertData);
-        return arr
     }
 
     viewAll(data, insertTag, inputData) {
@@ -194,12 +134,10 @@ class Toolbox extends React.Component {
         for (let i = 0; i < inputData.length; i++) {
             p.innerText += JSON.stringify(inputData[i], null, '\t\t\t\t\t')
         }
-        inputData.push('henlo')
     }
 
     findObjectByIdInDictArray(arr, id, objProp1) {
         pos = []
-        console.log("findObjectByIdInDictArray arr is" + JSON.stringify(arr) + "id is" + id)
         for (let i = 0; i < arr.length; i++) {
             let val = false
             val = this.findObjectById(arr[i], id, objProp1)
@@ -213,7 +151,6 @@ class Toolbox extends React.Component {
     }
 
     findObjectById(obj, id, objProp1) {
-        console.log(obj[objProp1]);
         if (obj[objProp1] == id) {
             console.log('found i')
             return obj;
@@ -263,18 +200,19 @@ class Toolbox extends React.Component {
                         <label htmlFor="elements">Choose an element:</label>
 
                         <select id="elements" className="ui dropdown" onChange={(e) => this.selectDropdown(e)}>
+                            <option value="start">Select Element</option>
                             <option value="div">div</option>
                             <option value="input">input</option>
                         </select>
                         <label htmlFor="idList">Where to enter</label>
-                        <select id="idList" className="ui dropdown">
+                        <select id="idList" className="ui dropdown" onChange={(e) => this.selectDropdown(e)}>
                         </select>
 
-                        <div className="ui segment" id="customFields">
+                        <div className="ui segment" id="customFields">{/*
                             <label htmlFor="textInput">Enter id</label>
                             <input type="text" className="ui fluid input" id="id"></input>
                             <label htmlFor="textInput">Enter CSS class</label>
-                            <input type="text" className="ui fluid input" id="cssClassInput"></input>
+                            <input type="text" className="ui fluid input" id="cssClassInput"></input>*/}
                         </div>
                         <p id="p1">
                         </p>

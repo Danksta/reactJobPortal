@@ -25,6 +25,9 @@ export let inputType = [{
 
 export let inputFields = [
     {
+      "name": "start"
+    },
+    {
         "name": "div",
         "id" : "Enter ID",
         "properties.css_class": "Enter css"
@@ -33,6 +36,7 @@ export let inputFields = [
         "name": "input",
         "id" : "Enter ID",
         "label": "Enter label",
+        "properties.data_type": "Enter input type",
         "properties.css_class": "Enter css",
 
     }

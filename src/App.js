@@ -8,8 +8,8 @@ function App() {
     return (
         <div>
             <Header />
-            {/*<MainContent/>*/}
-            <Toolbox/>
+            <MainContent/>
+           {/* <Toolbox/>*/}
             {/*<optionHandler />*/}
             <Footer/>
         </div>

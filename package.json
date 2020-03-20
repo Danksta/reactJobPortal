@@ -4,14 +4,16 @@
   "private": true,
   "dependencies": {
     "browserify-fs": "^1.0.0",
-    "browserslist": "^4.9.0",
+    "browserslist": "^4.9.1",
+    "rc-table": "^7.3.6",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "react-scripts": "^3.4.0"
+    "react-scripts": "^3.4.0",
+    "react-table": "^7.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/preset-env": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
     "case-sensitive-paths-webpack-plugin": "^2.3.0",
     "webpack-plugin": "^1.0.5"
   },
